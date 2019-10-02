@@ -20,14 +20,14 @@ if(isset($_POST["register"]))
 	$username = trim($_POST["username"]);
 	$password = trim($_POST["password"]);
 	$check_query = "
-	SELECT * FROM login 
+	SELECT * FROM login
 	WHERE username = :username
 	";
 	$statement = $connect->prepare($check_query);
 	$check_data = array(
 		':username'		=>	$username
 	);
-	if($statement->execute($check_data))	
+	if($statement->execute($check_data))
 	{
 		if($statement->rowCount() > 0)
 		{
@@ -58,8 +58,8 @@ if(isset($_POST["register"]))
 				);
 
 				$query = "
-				INSERT INTO login 
-				(username, password) 
+				INSERT INTO login
+				(username, password)
 				VALUES (:username, :password)
 				";
 				$statement = $connect->prepare($query);
@@ -74,18 +74,18 @@ if(isset($_POST["register"]))
 
 ?>
 
-<html>  
-    <head>  
-        <title>Chat Application using PHP Ajax Jquery</title>  
+<html>
+    <head>
+        <title>Chat Application using PHP Ajax Jquery</title>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    </head>  
-    <body>  
+    </head>
+    <body>
         <div class="container">
 			<br />
-			
+
 			<h3 align="center">Chat Application using PHP Ajax Jquery</a></h3><br />
 			<br />
 			<div class="panel panel-default">
@@ -106,6 +106,15 @@ if(isset($_POST["register"]))
 							<input type="password" name="confirm_password" class="form-control" />
 						</div>
 						<div class="form-group">
+							<label>Jenis Pengguna </label>
+							<input type="radio" name="type"
+								<?php if (isset($gender) && $gender=="female") echo "checked";?>
+								value="penjual">Penjual
+							<input type="radio" name="type"
+								<?php if (isset($gender) && $gender=="male") echo "checked";?>
+								value="pembeli">Pembeli
+						</div>
+						<div class="form-group">
 							<input type="submit" name="register" class="btn btn-info" value="Register" />
 						</div>
 						<div align="center">
@@ -115,5 +124,5 @@ if(isset($_POST["register"]))
 				</div>
 			</div>
 		</div>
-    </body>  
+    </body>
 </html>
