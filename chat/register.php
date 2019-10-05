@@ -19,6 +19,7 @@ if(isset($_POST["register"]))
 {
 	$username = trim($_POST["username"]);
 	$password = trim($_POST["password"]);
+	$type = $_POST["type"];
 	$check_query = "
 	SELECT * FROM login
 	WHERE username = :username
@@ -27,40 +28,32 @@ if(isset($_POST["register"]))
 	$check_data = array(
 		':username'		=>	$username
 	);
-	if($statement->execute($check_data))
-	{
-		if($statement->rowCount() > 0)
-		{
+	if($statement->execute($check_data)) {
+		if($statement->rowCount() > 0) {
 			$message .= '<p><label>Username already taken</label></p>';
-		}
-		else
-		{
-			if(empty($username))
-			{
+		} else {
+			if(empty($username)) {
 				$message .= '<p><label>Username is required</label></p>';
 			}
-			if(empty($password))
-			{
+			if(empty($password)) {
 				$message .= '<p><label>Password is required</label></p>';
 			}
-			else
-			{
-				if($password != $_POST['confirm_password'])
-				{
+			else {
+				if($password != $_POST['confirm_password']) {
 					$message .= '<p><label>Password not match</label></p>';
 				}
 			}
-			if($message == '')
-			{
+			if($message == '') {
 				$data = array(
 					':username'		=>	$username,
-					':password'		=>	password_hash($password, PASSWORD_DEFAULT)
+					':password'		=>	password_hash($password, PASSWORD_DEFAULT),
+					':status_akun'=>  $type
 				);
 
 				$query = "
 				INSERT INTO login
-				(username, password)
-				VALUES (:username, :password)
+				(username, password, status_akun)
+				VALUES (:username, :password, :status_akun)
 				";
 				$statement = $connect->prepare($query);
 				if($statement->execute($data))
@@ -106,13 +99,9 @@ if(isset($_POST["register"]))
 							<input type="password" name="confirm_password" class="form-control" />
 						</div>
 						<div class="form-group">
-							<label>Jenis Pengguna </label>
-							<input type="radio" name="type"
-								<?php if (isset($gender) && $gender=="female") echo "checked";?>
-								value="penjual">Penjual
-							<input type="radio" name="type"
-								<?php if (isset($gender) && $gender=="male") echo "checked";?>
-								value="pembeli">Pembeli
+							<label>Jenis Pengguna </label><br/>
+							<input type="radio" name="type" value="Penjual" checked>Penjual<br/>
+ 							<input type="radio" name="type" value="Pembeli">Pembeli<br/>
 						</div>
 						<div class="form-group">
 							<input type="submit" name="register" class="btn btn-info" value="Register" />
