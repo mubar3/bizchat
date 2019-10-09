@@ -1,24 +1,76 @@
+<html>
+<head>
+  <title>Form Pengisian Katalog</title>
+</head>
+<body>
+  <h1>Form Pengisian Katalog</h1>
+  <form method="post" enctype="multipart/form-data" action="upload.php">
+		<label>Deskripsi</label>
+		<br>
+		<textarea rows="10" cols= "40" name="description" class="form-control">
+		</textarea>
+		<br>
+		<br>
+		<label>Kategori</label>
+		<br>
+		<select name="types">
+    	<option value="baju_anak">Pakaian Anak-Anak</option>
+    	<option value="hape">Handphone & Aksesoris</option>
+  	</select>
+		<br><br><br>
+		<input type="file" name="gambar">
+		<br><br><br>
+    <input type="submit" name="upload" value="Upload">
+  </form>
+</body>
+</html>
+
 <?php
 
-//upload.php
+// Ambil Data yang Dikirim dari Form
+		include 'koneksi.php';
+		if($_POST['upload']){
+			$ekstensi_diperbolehkan	= array('png','jpg');
+			$nama = $_FILES['gambar']['name'];
+			$x = explode('.', $nama);
+			$ekstensi = strtolower(end($x));
+			$ukuran	= $_FILES['gambar']['size'];
+			$file_tmp = $_FILES['gambar']['tmp_name'];
 
-if(!empty($_FILES))
-{
-	if(is_uploaded_file($_FILES['uploadFile']['tmp_name']))
-	{
-		$ext = pathinfo($_FILES['uploadFile']['name'], PATHINFO_EXTENSION);
-		$allow_ext = array('jpg', 'png');
-		if(in_array($ext, $allow_ext))
-		{
-			$_source_path = $_FILES['uploadFile']['tmp_name'];
-			$target_path = 'upload/' . $_FILES['uploadFile']['name'];
-			if(move_uploaded_file($_source_path, $target_path))
-			{
-				echo '<p><img src="'.$target_path.'" class="img-thumbnail" width="200" height="160" /></p><br />';
+			if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
+				if($ukuran < 1044070){
+					move_uploaded_file($file_tmp, 'images/'.$nama);
+					$query = mysql_query("INSERT INTO upload VALUES(NULL, '$nama')");
+					if($query){
+						echo 'FILE BERHASIL DI UPLOAD';
+					}else{
+						echo 'GAGAL MENGUPLOAD GAMBAR';
+					}
+				}else{
+					echo 'UKURAN FILE TERLALU BESAR';
+				}
+			}else{
+				echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
 			}
-			//echo $ext;
 		}
-	}
-}
+		?>
 
-?>
+		<br/>
+		<br/>
+		<a href="index.php">Upload Lagi</a>
+		<br/>
+		<br/>
+
+		<table>
+			<?php
+			include 'koneksi.php';
+			$data = mysql_query("select * from katalog");
+			while($d = mysql_fetch_array($data)){
+			?>
+			<tr>
+				<td>
+					<img src="<?php echo "images/".$d['nama_file']; ?>">
+				</td>
+			</tr>
+			<?php } ?>
+		</table>
