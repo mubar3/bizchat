@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2019 at 12:18 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Waktu pembuatan: 09 Okt 2019 pada 18.37
+-- Versi server: 10.3.16-MariaDB
+-- Versi PHP: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chat_message`
+-- Struktur dari tabel `chat_message`
 --
 
 CREATE TABLE `chat_message` (
@@ -38,7 +38,7 @@ CREATE TABLE `chat_message` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `chat_message`
+-- Dumping data untuk tabel `chat_message`
 --
 
 INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `chat_message`, `timestamp`, `status`) VALUES
@@ -57,7 +57,21 @@ INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `ch
 -- --------------------------------------------------------
 
 --
--- Table structure for table `login`
+-- Struktur dari tabel `katalog`
+--
+
+CREATE TABLE `katalog` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `ukuran` int(11) NOT NULL,
+  `tipe` varchar(100) NOT NULL,
+  `deksripsi` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `login`
 --
 
 CREATE TABLE `login` (
@@ -69,16 +83,17 @@ CREATE TABLE `login` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `login`
+-- Dumping data untuk tabel `login`
 --
 
 INSERT INTO `login` (`user_id`, `username`, `password`, `status_akun`, `email`) VALUES
-(10, 'h', '$2y$10$aTVGMKoTpoPeh6eu7458Pe9r6HZ30DccagvHqb4FDHYf4QXohIMFO', 'pembeli', 'khusnul.mubar@yahoo.');
+(10, 'h', '$2y$10$aTVGMKoTpoPeh6eu7458Pe9r6HZ30DccagvHqb4FDHYf4QXohIMFO', 'pembeli', 'khusnul.mubar@yahoo.'),
+(11, 'zenn04', '$2y$10$T8rggop8MjnGKgdXizc/b.BiYWFcCbndEVZ0K5iadHEKOCy1uvtPm', 'penjual', 'humamatabilhaq04@gma');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `login_details`
+-- Struktur dari tabel `login_details`
 --
 
 CREATE TABLE `login_details` (
@@ -89,7 +104,7 @@ CREATE TABLE `login_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `login_details`
+-- Dumping data untuk tabel `login_details`
 --
 
 INSERT INTO `login_details` (`login_details_id`, `user_id`, `last_activity`, `is_type`) VALUES
@@ -110,51 +125,65 @@ INSERT INTO `login_details` (`login_details_id`, `user_id`, `last_activity`, `is
 (15, 10, '2019-10-05 05:51:10', 'no'),
 (16, 10, '2019-10-06 04:42:49', 'no'),
 (17, 9, '2019-10-06 04:40:43', 'no'),
-(18, 9, '2019-10-06 12:06:48', 'no');
+(18, 9, '2019-10-06 12:06:48', 'no'),
+(19, 11, '2019-10-09 14:05:57', 'no'),
+(20, 11, '2019-10-09 16:33:23', 'no');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `chat_message`
+-- Indeks untuk tabel `chat_message`
 --
 ALTER TABLE `chat_message`
   ADD PRIMARY KEY (`chat_message_id`);
 
 --
--- Indexes for table `login`
+-- Indeks untuk tabel `katalog`
+--
+ALTER TABLE `katalog`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `login`
 --
 ALTER TABLE `login`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `login_details`
+-- Indeks untuk tabel `login_details`
 --
 ALTER TABLE `login_details`
   ADD PRIMARY KEY (`login_details_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `chat_message`
+-- AUTO_INCREMENT untuk tabel `chat_message`
 --
 ALTER TABLE `chat_message`
   MODIFY `chat_message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `login`
+-- AUTO_INCREMENT untuk tabel `katalog`
 --
-ALTER TABLE `login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `katalog`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `login_details`
+-- AUTO_INCREMENT untuk tabel `login`
+--
+ALTER TABLE `login`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT untuk tabel `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `login_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `login_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
