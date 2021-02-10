@@ -80,8 +80,8 @@ if(isset($_POST["register"]))
 $mail->isSMTP();
 $mail->Host = 'smtp.gmail.com';
 $mail->SMTPAuth = true;
-$mail->Username = 'khusnulmubar4@gmail.com';
-$mail->Password = 'Insaallah12345';
+$mail->Username = '';
+$mail->Password = '';
 $mail->SMTPSecure = 'tls';
 $mail->Port = 587;
 
